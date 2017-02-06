@@ -1,0 +1,70 @@
+
+Assignment is in directory 'practice/', and the full code(answer) is in directory 'complete/'.
+You should not go to 'complete/' before working on the assignment.
+
+###############################################################################################
+##                              Jack's Cars Rental Problem                                   ##
+###############################################################################################
+  Jack manages two locations, A and B, for a nationwide car rental company. Each day, some number
+of customers arrive at each location to rent car. If Jack has a car available, he rents it out and
+is credited $10 by the company. If he is out of cars at that location, then the business is lost.
+Cars become available for renting the day after they are returned. To help ensure that cars available
+where they are needed, Jack can move them between the two location overnight, at a cost of $2 per
+car moved. We assume that the number of cars requested and returned at each location are Poisson
+random variables, giving the expected number of Poisson distribution as,
+- A_request: 3
+- A_return:  3
+- B_request: 4
+- B_return:  2.
+Each location has its maximum storage as 20 cars, and 5 cars at most can be moved from one location
+to the other overnight. We take the discount rate to be gamma=0.9 and formulate this as a continuing
+finite MDP, where the time step are days, the state is the number of cars at each location, and the
+actions are the number of cars moved between the two location overnight, following,
++: move cars from A to B
+-: move cars from B to A
+Find the opimal policy for Jack to earn the most money using policy iteration and value iteration.
+
+
+###############################################################################################
+##                                      Assignment                                           ##
+###############################################################################################
+  File 'env.py' defines request/return distribution of the two location, i.e. sampling function 
+of the four Poisson random variables. 'main.py' is the main function to be run, in which function
+'main1()' and 'main2()' respectively corresponding to two parts of the assignment. 'jack_car.py'
+define solver of this problem, and this is the only file you need to modify in this assignment.
+  There are two major parts to be worked on,
+1. Policy optimizer using dynamic programming(DP):
+     In this section, you will use precomputed environment dynamics, i.e. transition matrix P(action,
+   state, next_state) and expected return R(action, state, next_state). The precomputed data is in
+   'env_dynamics/', where 'a*_conf.npy' referring to configuration of the problem, 'a*_P.npy' is 
+   transition matrix, and 'a*_R.npy' is expected return('a1' is the problem setting identical to the 
+   above-mentioned). What you need to do here is to implement two DP method to find optimal policy,
+   - policy iteration: please modify 'JackCar._policy_iteration()' in file 'jack_car.py'
+   - value iteration: please modify 'JackCar._value_iteration()' in file 'jack_car.py'
+   Running 'python main.py' with 'main1()' activated will output the optimal policy from your imple-
+   mentation and you can check if it is reasonable. Also, I have add few lines of codes to check if 
+   your policy is monotonically getting better at each iteration. Finally, you can change the pre-
+   computed data to 'a1~4*' for different problem settings.
+2. Constructing environment dynamics:
+     In this section, you will have to construct environment dynamics yourselves. You need to 
+   modify 'JackCar._compute_pr()' in file 'jack_car.py', which computes transition probability and
+   expected return given triplet (state, next_state, action). This function works with 'JackCar._
+   build_env_dynamics()', which is already completed for you, forming full environment dynamics, i.e.
+   'a*_P.npy' and 'a*_R.npy'.
+For more details, you can look at comments in the code. 
+
+
+###############################################################################################
+##                                         Notes                                             ##
+###############################################################################################
+- In policy iteration, take a closer look at error of policy evaluation process
+- In both policy iteration and value iteration, observe how policy converges to the optimal policy
+- can try different initialization at every step of policy iteration or value iteration
+- tweak tolerance in policy evaluation process
+- your implementation of computing environment dynamics may be slightly different from mine and that
+  is fine since it depends on the very details of problem settings. As long as your optimal policy 
+  looks resonable, everything is fine.
+- If you make sure your implementation correct, you can try different problem settings and look
+  at your opimal policy found.
+
+
