@@ -26,8 +26,8 @@ def main2():
     DP_method = 'policy-iteration'
     conf = {
         'max_move': 4,
-        'max_cars_A': 7,
-        'max_cars_B': 10,
+        'max_cars_A': 5,
+        'max_cars_B': 5,
         'rent_price': 10,
         'move_cost': 2,
         'gamma': 0.9
@@ -49,5 +49,6 @@ def main2():
     model.visualize_policy()
 
 if __name__=='__main__':
-    main1()
+    #main1()
+    main2()
 
